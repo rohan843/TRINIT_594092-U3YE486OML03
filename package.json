@@ -30,7 +30,5 @@
     "gulp-sourcemaps": "^2.6.5",
     "sass": "^1.49.9",
     "black-dashboard": "^1.0.0"
-  },
-  "dependencies": {
   }
 }
