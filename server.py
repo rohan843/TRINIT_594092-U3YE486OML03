@@ -22,23 +22,31 @@ def get_loc_info_from_state(state):
         'Madhya Pradesh':	'23.473324,77.947998',
         'Haryana':	'29.238478,76.431885',
         'Chhattisgarh':	'21.295132,81.828232',
-        'Haryana':	'29.065773,76.040497',
-        'Madhya Pradesh':	'25.794033,78.116531',
         'Maharashtra':	'19.601194,75.552979',
         'Tripura':	'23.745127,91.746826',
-        'Telangana':	'17.874857,78.100815',
         'Karnataka':	'15.317277,75.713890',
         'Kerala':	'10.850516,76.271080',
         'Uttar Pradesh':	'28.207609,79.826660',
         'Assam':	'26.244156,92.537842',
-        'Maharashtra':	'19.663280,75.300293',
-        'Tamil Nadu':	'11.127123,78.656891',
-        'Karnataka':	'15.317277,75.713890',
         'West Bengal':	'22.978624,87.747803',
         'Gujarat':	'22.309425,72.136230',
         'Odisha':	'20.940920,84.803467',
         'Rajasthan':	'27.391277,73.432617',
-        'Himachal Pradesh':	'32.084206,77.571167'
+        'Himachal Pradesh':	'32.084206,77.571167',
+        'Bihar': '25.9644,85.2722',
+        'Andhra Pradesh': '15.9129,79.7400',
+        'Punjab': '31.1471,75.3412',
+        'Goa': '15.2993,74.1240',
+        'Mizoram': '23.1645,92.9376',
+        'Manipur': '24.6637,93.9063',
+        'Arunachal Pradesh': '28.2180,94.7278',
+        'Jharkhand': '23.6913,85.2722',
+        'Nagaland': '26.1584,94.5624',
+        'Sikkim': '27.3516,88.3239',
+        'Meghalaya': '25.4670,91.3662',
+        'Uttarakhand': '30.0668,79.0193',
+        'Delhi': '28.7041,77.1025',
+        'Jammu & Kashmir': '33.2778,75.3412'
     }
     latlong = state_to_latlong[state]
     apiKey = 'a3d4d1fd09d84e57b4290807231102'
@@ -60,10 +68,12 @@ def get_soil_params_from_params(temp, humidity, crop):
     temp, humidity, crop --> N, P, K, pH
     '''
 
+
 def get_rainfall_timeseries_from_params(state, month):
     '''
-    state, month --> (rain in mms, year) list
+    state, month --> (rain in mm, year) list
     '''
+
 
 def get_crop_proces_from_params(state):
     '''
