@@ -53,11 +53,11 @@ def getSoilParamsRecommendation(temperature, humidity, crop):
 
 def getRainfallLevelValues(state, month: int):
     '''
-    state, month (index, 0 based) --> (rain in mm, year) list
+    state, month (index, 0 based) --> (rain in mm, \year\) list
     '''
     month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
              'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][month]
-    return [tuple(i) for i in rainfall_levels_df[rainfall_levels_df['state'] == state][[month, 'YEAR']].values]
+    return [tuple(i)[0] for i in rainfall_levels_df[rainfall_levels_df['state'] == state][[month, 'YEAR']].values][:-12]
 
 # State based Price of Items
 
@@ -93,7 +93,7 @@ crop_recommender_model = KNeighborsClassifier().fit(
 
 def getCropRecommendations(N, P, K, temperature, humidity, ph):
     '''
-    N, P, K, temperature, humidity, ph --> crops
+    N, P, K, temperature, humidity, ph --> (crop, prob value) list
     '''
     ids = crop_recommender_model.kneighbors([[N, P, K, temperature, humidity, ph]], n_neighbors=1200, return_distance=False)[0]
     arr = crop_recomendation_df.iloc[ids, -1].values
@@ -107,7 +107,7 @@ def getCropRecommendations(N, P, K, temperature, humidity, ph):
     res = []
     for crop, p in p_sum.items():
         p /= t_sum
-        res.append((crop, p))
+        res.append((crop, (p * 100) // 1))
     return res
 
 

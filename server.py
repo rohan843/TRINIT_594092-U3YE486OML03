@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
-from mlAlgos import getCropRecommendation, getSoilParamsRecommendation, getRainfallLevelValues, getStateBasedItemPrices
+from mlAlgos import getCropRecommendations, getSoilParamsRecommendation, getRainfallLevelValues, getStateBasedItemPrices
 import json
 
 FLASK_PORT = 4002
@@ -47,9 +47,9 @@ def get_loc_info_from_state(state):
 
 def get_crop_suggestion_from_params(N, P, K, pH, temp, humidity):
     '''
-    N, P, K, pH, temp, humidity --> crop list
+    N, P, K, pH, temp, humidity --> (crop, prob value) list
     '''
-    return getCropRecommendation(N=N, P=P, K=K, ph=pH, temperature=temp, humidity=humidity)
+    return getCropRecommendations(N=N, P=P, K=K, ph=pH, temperature=temp, humidity=humidity)
 
 
 def get_soil_params_from_params(temp, humidity, crop):

@@ -299,8 +299,8 @@
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">N,P,K Amounts</h5>
-                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span
-                      style="color: blue;" id="nConcDisp">-</span> | <span style="color: green;" id="pConcDisp">-</span>
+                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span style="color: blue;"
+                      id="nConcDisp">-</span> | <span style="color: green;" id="pConcDisp">-</span>
                     | <span style="color: purple;" id="kConcDisp">-</span></b></h3>
               </div>
               <div class="card-body">
@@ -314,8 +314,7 @@
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">pH Level</h5>
-                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span
-                      id="phDisp">-</span></b></h3>
+                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span id="phDisp">-</span></b></h3>
               </div>
               <div class="card-body">
                 <div class="chart-area">
@@ -328,8 +327,7 @@
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Best Crops</h5>
-                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span
-                      id="bestCrop">-</span></b></h3>
+                <h3 class="card-title"><i class="fas fa-solid fa-hashtag"></i> <b><span id="bestCrop">-</span></b></h3>
               </div>
               <div class="card-body">
                 <div class="chart-area">
@@ -389,7 +387,7 @@
                         <input type="number" class="form-control" id="phVal" step="0.01" required>
                       </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label for="monthSelector">Month</label>
                       <select class="form-control" id="monthSelector" required>
                         <option value="0" style="color: black;">January</option>
@@ -405,7 +403,7 @@
                         <option value="10" style="color: black;">November</option>
                         <option value="11" style="color: black;">December</option>
                       </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                       <label for="stateSelect">State</label>
                       <select class="form-control" id="stateSelect" required>
@@ -425,6 +423,23 @@
                         <option value="manipur" style="color: black;">Manipur </option>
                         <option value="meghalaya" style="color: black;">Meghalaya </option>
                         <option value="andaman and nicobar" style="color: black;">Andaman and Nicobar</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="stateSelect">Desired Crop</label>
+                      <select class="form-control" id="stateSelect" required>
+                        <option value="apple" style="color: black;">apple</option>
+                        <option value="banana" style="color: black;">banana </option>
+                        <option value="coconut" style="color: black;">coconut </option>
+                        <option value="cotton" style="color: black;">cotton </option>
+                        <option value="grapes" style="color: black;">grapes </option>
+                        <option value="jute" style="color: black;">jute </option>
+                        <option value="maize" style="color: black;">maize </option>
+                        <option value="mango" style="color: black;">mango </option>
+                        <option value="orange" style="color: black;">orange </option>
+                        <option value="papaya" style="color: black;">papaya </option>
+                        <option value="pomegranate" style="color: black;">pomegranate </option>
+                        <option value="rice" style="color: black;">rice </option>
                       </select>
                     </div>
 
@@ -798,6 +813,7 @@
     <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script>
     <!-- Black Dashboard DEMO methods, don't include it in your project! -->
     <script src="../assets/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       paramsDict = {
         "chartBig1": {
@@ -966,8 +982,19 @@
       const datePara = document.getElementById('curdate')
       datePara.innerText = displayDate()
 
-      function updateParams(N, P, K, pH, month, state) {
-        return paramsDict;
+      async function updateParams(N, P, K, pH, state, crop) {
+        response = await axios.get('/get_everything', {
+          params: {
+            N: N,
+            P: P,
+            K: K,
+            pH: pH,
+            state: state,
+            crop: crop
+          }
+        })
+        console.dir(response.data);
+        return response.data;
       }
 
       const submitBtn = document.getElementById('submitbtn')
@@ -977,16 +1004,16 @@
       const kConcDisp = document.getElementById('kConcDisp')
       const phDisp = document.getElementById('phDisp')
       const bestCrop = document.getElementById('bestCrop')
-      submitBtn.addEventListener('click', (e) => {
+      submitBtn.addEventListener('click', async (e) => {
         e.preventDefault()
         e.stopPropagation()
         N = form.children[0].children[0].children[1].value
         P = form.children[0].children[1].children[1].value
         K = form.children[1].children[0].children[1].value
         pH = form.children[1].children[1].children[1].value
-        month = form.children[2].children[1].value
-        state = form.children[3].children[1].value
-        paramsDict = updateParams(N, P, K, pH, month, state)
+        state = form.children[2].children[1].value
+        crop = form.children[3].children[1].value
+        paramsDict = await updateParams(N, P, K, pH, state, crop)
         demo.initDashboardPageCharts(paramsDict)
         nConcDisp.innerText = paramsDict["NPKData"][0]
         pConcDisp.innerText = paramsDict["NPKData"][1]
