@@ -63,6 +63,23 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+app.get('/crop_suggestion', async (req, res) => {
+    let N = req.query.N;
+    let P = req.query.P;
+    let K = req.query.K;
+    let pH = req.query.pH;
+    let state = req.query.state;
+});
+
+app.get('/soil_suggestion', async (req, res) => {
+});
+
+app.get('/rainfall_timeseries_data', async (req, res) => {
+});
+
+app.get('/crop_price_by_state_data', async (req, res) => {
+});
+
 app.listen(3000, () => {
     console.log("Server set up to listen on port 3000.");
 });
