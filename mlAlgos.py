@@ -2,9 +2,9 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeRegressor
 
-crop_recomendation_df = pd.read_csv('/kaggle/input/tri-nit/data/crop_recommendation.csv')
-rainfall_levels_df = pd.read_csv('/kaggle/input/tri-nit/data/rainfall_levels.csv')
-agriculture_price_df = pd.read_csv('/kaggle/input/tri-nit/data/agriculture_price.csv')
+crop_recomendation_df = pd.read_csv('data/crop_recommendation.csv')
+rainfall_levels_df = pd.read_csv('data/rainfall_levels.csv')
+agriculture_price_df = pd.read_csv('data/agriculture_price.csv')
 
 # N, P, K, pH
 
