@@ -61,12 +61,25 @@ def getRainfallLevelValues(state, month: int):
 
 # State based Price of Items
 
+def summarizeAvg(lst):
+    freq = dict()
+    acc = dict()
+    for name, amt in lst:
+        if name not in freq.keys():
+            freq[name] = 0
+            acc[name] = 0
+        freq[name] = freq[name] + 1
+        acc[name] = acc[name] + amt
+    res = []
+    for name, accAmt in acc.items():
+        res.append((name, accAmt / freq[name]))
+    return res
 
 def getStateBasedItemPrices(state):
     '''
     state --> (crop, selling price) list
     '''
-    return [tuple(i) for i in agriculture_price_df[agriculture_price_df['state'] == state][['label', 'modal_price']].values]
+    return summarizeAvg([tuple(i) for i in agriculture_price_df[agriculture_price_df['state'] == state][['label', 'modal_price']].values])
 
 # Crop Recommendation based on Soil
 

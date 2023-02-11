@@ -10,7 +10,7 @@ app.use("*/img", express.static("public/img"));
 app.use("*/js", express.static("public/js"));
 
 // ---- Utility Functions ----
-const baseURL = '';
+const baseURL = 'http://127.0.0.1:4002';
 
 async function apiCall(url, params) {
     let res = await axios.get(url, {

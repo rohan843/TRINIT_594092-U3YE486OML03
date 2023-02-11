@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
 from mlAlgos import getCropRecommendation, getSoilParamsRecommendation, getRainfallLevelValues, getStateBasedItemPrices
+import json
 
 FLASK_PORT = 4002
 
@@ -38,9 +39,9 @@ def get_loc_info_from_state(state):
     latlong = state_to_latlong[state]
     apiKey = 'a3d4d1fd09d84e57b4290807231102'
     URL = f'http://api.weatherapi.com/v1/current.json?key={apiKey}&q={latlong}&aqi=no'
-    data = requests.get(URL).text
-    temp = str(data["current"]["temp_c"])
-    humidity = str(data["current"]["humidity"])
+    data = json.loads(requests.get(URL).text)
+    temp = float(data["current"]["temp_c"])
+    humidity = float(data["current"]["humidity"])
     return temp, humidity
 
 
@@ -79,10 +80,10 @@ def get_crop_suggestion():
     '''
     N, P, K, pH, state --> best crop
     '''
-    N = request.args.get('N')
-    P = request.args.get('P')
-    K = request.args.get('K')
-    pH = request.args.get('pH')
+    N = float(request.args.get('N'))
+    P = float(request.args.get('P'))
+    K = float(request.args.get('K'))
+    pH = float(request.args.get('pH'))
     state = request.args.get('state')
     temp, humidity = get_loc_info_from_state(state)
     best_crop = get_crop_suggestion_from_params(N, P, K, pH, temp, humidity)
@@ -101,13 +102,13 @@ def get_soil_suggestion():
     crop = request.args.get('crop')
     state = request.args.get('state')
     temp, humidity = get_loc_info_from_state(state)
-    N, P, K, pH = get_soil_params_from_params(temp, humidity, crop)
+    res = get_soil_params_from_params(temp, humidity, crop)
     return jsonify(
         {
-            'N': N,
-            'P': P,
-            'K': K,
-            'pH': pH
+            'N': res['N'],
+            'P': res['P'],
+            'K': res['K'],
+            'pH': res['pH']
         }
     )
 
@@ -117,7 +118,7 @@ def get_rainfall_timeseries_data():
     '''
     state, month --> rainfall time series
     '''
-    month = request.args.get('month')
+    month = int(request.args.get('month'))
     state = request.args.get('state')
     time_ser = get_rainfall_timeseries_from_params(state, month)
     return jsonify(
