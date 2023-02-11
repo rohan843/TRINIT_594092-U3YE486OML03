@@ -72,12 +72,17 @@ app.get('/crop_suggestion', async (req, res) => {
 });
 
 app.get('/soil_suggestion', async (req, res) => {
+    let state = req.query.state;
+    let crop = req.query.crop;
 });
 
 app.get('/rainfall_timeseries_data', async (req, res) => {
+    let month = req.query.month;
+    let state = req.query.state;
 });
 
 app.get('/crop_price_by_state_data', async (req, res) => {
+    let state = req.query.state;
 });
 
 app.listen(3000, () => {
