@@ -1,42 +1,7 @@
-# Core
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-%matplotlib inline
-import seaborn as sns
-sns.set(style='darkgrid', font_scale=1.4)
-from imblearn.over_sampling import SMOTE
-import itertools
-import warnings
-warnings.filterwarnings('ignore')
-import plotly.express as px
-import time
-
-# Sklearn
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV, StratifiedKFold
-from sklearn.metrics import accuracy_score, confusion_matrix, recall_score, precision_score, f1_score
-from sklearn.metrics import roc_auc_score, plot_confusion_matrix, plot_roc_curve, roc_curve
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder, LabelEncoder
-from sklearn.feature_selection import mutual_info_classif
-from sklearn.decomposition import PCA
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-import eli5
-from eli5.sklearn import PermutationImportance
-from sklearn.utils import resample
-
-# Models
-from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
-from catboost import CatBoostClassifier
-from sklearn.naive_bayes import GaussianNB
 
 
 files = ["/kaggle/input/crop-recommendation-dataset/Crop_recommendation.csv","/kaggle/input/rainfall-in-india/rainfall in india 1901-2015.csv","/kaggle/input/rainfall-in-india/district wise rainfall normal.csv"]
@@ -63,16 +28,16 @@ temp_df = temp_df[['temperature', 'humidity', 'rainfall', 'label_apple', 'label_
 
 # Models
 #ToDO
-N_model = DecisionTreeClassifier()
+N_model = DecisionTreeRegressor()
 N_model.fit(temp_df.iloc[:,:-4].values,temp_df.iloc[:,-4].values)
 
 #N_model.predict([[20.130175,81.604873262,2.717340,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]])
 
-P_model = DecisionTreeClassifier()
+P_model = DecisionTreeRegressor()
 P_model.fit(temp_df.iloc[:,:-4].values,temp_df.iloc[:,-3].values)
 # P_model.predict([[20.130175,81.604873,2.717340,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]])
 
-K_model = DecisionTreeClassifier()
+K_model = DecisionTreeRegressor()
 K_model.fit(temp_df.iloc[:,:-4].values,temp_df.iloc[:,-2].values)
 
 #K_model.predict([[20.130175,81.604873,2.717340,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]])
