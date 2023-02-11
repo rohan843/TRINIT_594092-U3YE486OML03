@@ -5,8 +5,6 @@ FLASK_PORT = 4002
 app = Flask(__name__)
 
 # ---- API Endpoints Definition ----
-
-
 @app.route('/crop_suggestion', methods=['GET'])
 def get_crop_suggestion():
     '''
