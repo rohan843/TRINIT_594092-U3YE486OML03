@@ -47,7 +47,7 @@ def get_loc_info_from_state(state):
 
 def get_crop_suggestion_from_params(N, P, K, pH, temp, humidity):
     '''
-    N, P, K, pH, temp, humidity --> best crop
+    N, P, K, pH, temp, humidity --> crop list
     '''
     return getCropRecommendation(N=N, P=P, K=K, ph=pH, temperature=temp, humidity=humidity)
 
@@ -86,10 +86,10 @@ def get_crop_suggestion():
     pH = float(request.args.get('pH'))
     state = request.args.get('state')
     temp, humidity = get_loc_info_from_state(state)
-    best_crop = get_crop_suggestion_from_params(N, P, K, pH, temp, humidity)
+    best_crops = get_crop_suggestion_from_params(N, P, K, pH, temp, humidity)
     return jsonify(
         {
-            'best_crop': best_crop
+            'best_crops': best_crops
         }
     )
 

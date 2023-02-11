@@ -91,11 +91,24 @@ crop_recommender_model = KNeighborsClassifier().fit(
 # crop_recommender_model.predict([crop_recomendation_df.iloc[0, :-1].values])[0]
 
 
-def getCropRecommendation(N, P, K, temperature, humidity, ph):
+def getCropRecommendations(N, P, K, temperature, humidity, ph):
     '''
-    N, P, K, temperature, humidity, ph --> crop
+    N, P, K, temperature, humidity, ph --> crops
     '''
-    return crop_recommender_model.predict([[N, P, K, temperature, humidity, ph]])[0]
+    ids = crop_recommender_model.kneighbors([[N, P, K, temperature, humidity, ph]], n_neighbors=1200, return_distance=False)[0]
+    arr = crop_recomendation_df.iloc[ids, -1].values
+    p_sum = dict()
+    t_sum = 0
+    for i in range(len(arr)):
+        if arr[i] not in p_sum.keys():
+            p_sum[arr[i]] = 0
+        p_sum[arr[i]] += len(arr) - i
+        t_sum += len(arr) - i
+    res = []
+    for crop, p in p_sum.items():
+        p /= t_sum
+        res.append((crop, p))
+    return res
 
 
 if __name__ == '__main__':
@@ -103,4 +116,4 @@ if __name__ == '__main__':
     print(getSoilParamsRecommendation(20, 30, 'rice'))
     print(getRainfallLevelValues('tamil nadu', 0))
     print(getStateBasedItemPrices('tamil nadu'))
-    print(getCropRecommendation(2, 3, 4, 50, 20, 5))
+    print(getCropRecommendations(2, 3, 4, 50, 20, 5))
