@@ -5,9 +5,9 @@ const axios = require('axios');
 const app = express();
 app.set('view engine', 'ejs');
 app.use(parser.urlencoded({ extended: true }));
-app.use("*/css", express.static("public/css"));
-app.use("*/img", express.static("public/img"));
-app.use("*/js", express.static("public/js"));
+app.use("*/css", express.static("assets/css"));
+app.use("*/img", express.static("assets/img"));
+app.use("*/js", express.static("assets/js"));
 
 // ---- Utility Functions ----
 const baseURL = 'http://127.0.0.1:4002';
@@ -60,7 +60,7 @@ async function crop_price_by_state_data(state) {
 
 // ---- Endpoints ----
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/examples/dashboard.html");
 });
 
 app.get('/crop_suggestion', async (req, res) => {
