@@ -1,22 +1,3 @@
-/*
-cd "Path to repo"
-mkdir "name of repo"
-cd "name of repo"
-mkdir views
-mkdir public
-mkdir public/css
-mkdir public/js
-mkdir public/img
-touch index.html app.js .env
-npm init
-npm i express body-parser ejs mongoose       # basic packages
-npm i mongoose-encryption       # used for encryption
-npm i dotenv         # used for the .env file (process.env.SECRET)
-npm i [md5 | bcrypt]     # used for hashing, bcrypt is safer and has salt rounds
-npm i passport passport-local passport-local-mongoose express-session     # used for cookies, sessions, and OAuth
-*/
-
-require('dotenv').config();
 const express = require('express');
 const parser = require('body-parser');
 
