@@ -18,7 +18,6 @@ def get_loc_info_from_state(state):
     humidity = ''
     state_to_latlong = {
         'tamil nadu':	'11.059821,78.387451',
-        'telangana':	'17.123184,79.208824',
         'madhya pradesh':	'23.473324,77.947998',
         'haryana':	'29.238478,76.431885',
         'maharashtra':	'19.601194,75.552979',
@@ -29,13 +28,10 @@ def get_loc_info_from_state(state):
         'assam':	'26.244156,92.537842',
         'west bengal':	'22.978624,87.747803',
         'gujarat':	'22.309425,72.136230',
-        'odisha':	'20.940920,84.803467',
         'rajasthan':	'27.391277,73.432617',
-        'himachal pradesh':	'32.084206,77.571167',
         'punjab': '31.1471,75.3412',
         'manipur': '24.6637,93.9063',
         'meghalaya': '25.4670,91.3662',
-        'uttrakhand': '30.0668,79.0193',
         'andaman and nicobar': '10.7449,92.5000'
     }
     latlong = state_to_latlong[state]
