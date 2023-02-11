@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
+from mlAlgos import getCropRecommendation, getSoilParamsRecommendation, getRainfallLevelValues, getStateBasedItemPrices
 
 FLASK_PORT = 4002
 
@@ -47,24 +48,28 @@ def get_crop_suggestion_from_params(N, P, K, pH, temp, humidity):
     '''
     N, P, K, pH, temp, humidity --> best crop
     '''
+    return getCropRecommendation(N=N, P=P, K=K, ph=pH, temperature=temp, humidity=humidity)
 
 
 def get_soil_params_from_params(temp, humidity, crop):
     '''
     temp, humidity, crop --> N, P, K, pH
     '''
+    return getSoilParamsRecommendation(temperature=temp, humidity=humidity, crop=crop)
 
 
-def get_rainfall_timeseries_from_params(state, month):
+def get_rainfall_timeseries_from_params(state, month: int):
     '''
-    state, month --> (rain in mm, year) list
+    state, month (0 to 11) --> (rain in mm, year) list
     '''
+    return getRainfallLevelValues(state=state, month=month)
 
 
-def get_crop_proces_from_params(state):
+def get_crop_prices_from_params(state):
     '''
     state --> (crop, selling price) list
     '''
+    return getStateBasedItemPrices(state=state)
 
 # ---- API Endpoints Definition ----
 
@@ -128,7 +133,7 @@ def get_crop_price_by_state_data():
     state --> crop and their market prices
     '''
     state = request.args.get('state')
-    price_list = get_crop_proces_from_params(state)
+    price_list = get_crop_prices_from_params(state)
     return jsonify(
         {
             'price_data': price_list
