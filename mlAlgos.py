@@ -32,15 +32,32 @@ def getOneHotEncodedVector(crop):
 # [temperature, humidity] + getOneHotEncodedVector(crop)
 # models['N'].predict([tmp_crop_recs_df.iloc[0, :-4].values])[0]
 
+def getSoilParamsRecommendation(temperature, humidity, crop):
+    '''
+    temperature, humidity, crop --> Soil params
+    '''
+    return {
+    'N': models['N'].predict([[temperature, humidity] + getOneHotEncodedVector(crop)])[0],
+    'P': models['P'].predict([[temperature, humidity] + getOneHotEncodedVector(crop)])[0],
+    'K': models['K'].predict([[temperature, humidity] + getOneHotEncodedVector(crop)])[0],
+    'pH': models['pH'].predict([[temperature, humidity] + getOneHotEncodedVector(crop)])[0]
+}
+
 # Rainfall Levels
 
-# months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-def getRainfallLevelValues(state, month):
+def getRainfallLevelValues(state, month: int):
+    '''
+    state, month (index, 0 based) --> rainfall data
+    '''
+    month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][month]
     return [tuple(i) for i in rainfall_levels_df[rainfall_levels_df['state'] == state][[month, 'YEAR']].values]
 
 # State based Price of Items
 
 def getStateBasedItemPrices(state):
+    '''
+    state --> item prices
+    '''
     return [tuple(i) for i in agriculture_price_df[agriculture_price_df['state'] == state][['label', 'modal_price']].values]
 
 # Crop Recommendation based on Soil
@@ -49,3 +66,15 @@ crop_recommender_model = KNeighborsClassifier().fit(crop_recomendation_df.iloc[:
 
 # [N, P, K, temperature, humidity, ph]
 # crop_recommender_model.predict([crop_recomendation_df.iloc[0, :-1].values])[0]
+def getCropRecommendation(N, P, K, temperature, humidity, ph):
+    '''
+    N, P, K, temperature, humidity, ph --> crop
+    '''
+    return crop_recommender_model.predict([[N, P, K, temperature, humidity, ph]])[0]
+
+if __name__ == '__main__':
+    # Debug
+    print(getSoilParamsRecommendation(20, 30, 'rice'))
+    print(getRainfallLevelValues('tamil nadu', 0))
+    print(getStateBasedItemPrices('tamil nadu'))
+    print(getCropRecommendation(2, 3, 4, 50, 20, 5))
