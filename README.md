@@ -1,5 +1,7 @@
 # Crop and Soil Predictor
 
+[Video]('https://drive.google.com/file/d/1zB4A5PV9KhoHtUvQybbAxcHbsR6PCrBP/view?usp=sharing')
+
 This is a system that is intended to provide various kinds of information to farmers regarding soil types and parameters (N, P, K concentration and the pH value) conducive to growing a particular crop.
 
 Currently the system supports all crop types that it was trained alongside.
