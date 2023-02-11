@@ -1,19 +1,50 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 FLASK_PORT = 4002
 
 app = Flask(__name__)
 
 # ---- API Endpoints Definition ----
-@app.route('/user_game_rec', methods=['GET'])
-def get_user_game_recs():
+
+
+@app.route('/crop_suggestion', methods=['GET'])
+def get_crop_suggestion():
+    '''
+    N, P, K, pH, state --> best crop
+    '''
     return jsonify(
         {
         }
     )
 
-@app.route('/refresh_model_data', methods=['POST'])
-def refresh_model_data():
+
+@app.route('/soil_suggestion', methods=['GET'])
+def get_soil_suggestion():
+    '''
+    state, crop --> optimal N, P, K, pH of soil values
+    '''
+    return jsonify(
+        {
+        }
+    )
+
+
+@app.route('/rainfall_timeseries_data', methods=['GET'])
+def get_rainfall_timeseries_data():
+    '''
+    state, month --> rainfall time series
+    '''
+    return jsonify(
+        {
+        }
+    )
+
+
+@app.route('/crop_price_by_state_data', methods=['GET'])
+def get_crop_price_by_state_data():
+    '''
+    state --> crop and their market prices
+    '''
     return jsonify(
         {
         }
@@ -25,6 +56,7 @@ def refresh_model_data():
 def page_not_found(e):
     return jsonify(
         {
+            'message': 'The requested endpoint was not found.'
         }
     )
 
