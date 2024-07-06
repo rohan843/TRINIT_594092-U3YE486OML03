@@ -124,7 +124,7 @@ demo = {
         intersect: 0,
         position: "nearest"
       },
-      responsive: true,
+      responsive: false,
       scales: {
         yAxes: [{
           barPercentage: 1.6,
@@ -134,7 +134,7 @@ demo = {
             zeroLineColor: "transparent",
           },
           ticks: {
-            suggestedMin: 60,
+            suggestedMin: 0,
             suggestedMax: 125,
             padding: 20,
             fontColor: "#2380f7"
